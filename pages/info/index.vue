@@ -55,6 +55,7 @@
 <script>
 	// 
 	let innerAudioContext = ''
+	let audio=[];
 	export default {
 		components:{
 		},
@@ -101,6 +102,26 @@
 				audioWay:0,//播放方式 0顺序播放 1随机播放 2单曲循环
 				collect:0,//是否收藏
 			}
+		},
+		onLoad(option) {
+			uni.request({
+				url: 'http://lqwan.club:3000/song/url?id=', //热歌榜
+				data: {
+					id: option.id
+				},
+				method: "GET",
+				success: (res) => {
+					console.log(res.data.data[0].url)
+					audio.push({
+						name:option.name,
+						author:"待修复",
+						img:option.img_src,
+						src:res.data.data[0].url
+					});
+					this.audioList=audio;
+				}
+			});
+			console.log(option)
 		},
 		computed:{
 			width:function (){
