@@ -48,111 +48,12 @@
 	import playlist from '../../components/playlist'
 	import playBot from '../../components/playbot'
 	import album from '../../components/album'
+	var list = [];
 	export default {
 		data() {
 			return {
 				current:0,
 				newList:[
-					{
-						Name:"像我这样的人1",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:0,
-						VIP:1
-						},{
-						Name:"像我这样的人2",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:1,
-						DJ:1,
-						HQ:0,
-						VIP:1
-						},{
-						Name:"像我这样的人3",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:0,
-						VIP:0
-						},{
-						Name:"像我这样的人4",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:0,
-						HQ:0,
-						VIP:1
-						},{
-						Name:"像我这样的人5",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:1,
-						DJ:1,
-						HQ:0,
-						VIP:1
-						},{
-						Name:"像我这样的人6",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:1,
-						VIP:0
-						},{
-						Name:"像我这样的人7",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:1,
-						VIP:0
-						},{
-						Name:"像我这样的人8",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:1,
-						VIP:0
-						},{
-						Name:"像我这样的人9",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:1,
-						VIP:0
-						},{
-						Name:"像我这样的人10",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:1,
-						VIP:0
-						},{
-						Name:"像我这样的人11",
-						SrcAudio:"http://m10.music.126.net/20190117183019/a55ba6ea85a64f26e106b6115a23e934/ymusic/5605/07fd/b516/a10d9e248c19d9ac2d40d2b0596fc09b.mp3",
-						Author:'毛不易',
-						Album:"平凡的一天sjb出校门才能农村明细表模板弄明白每年相比你每次下班是们重新报聪明程序包",
-						SQ:0,
-						DJ:1,
-						HQ:1,
-						VIP:0
-						}
 				],
 				newDiscList:[
 					{name:"你的独家品味推荐",src:"../../static/image/sc5.jpg",count:"53133000",updateTime:"刚刚更新"},
@@ -185,6 +86,31 @@
 		components:{allplay,playlist,playBot,album},
 		onLoad(options){
 			this.current = Number(options.count)
+			if(this.current==0){
+				uni.request({
+					url: 'http://lqwan.club:3000/top/list', //热歌榜
+					data: {
+						idx: '1'
+					},
+					method: "GET",
+					success: (res) => {
+						console.log(res.data.playlist);
+						for (let i = 0; i < res.data.playlist.tracks.length; i++) {
+							list.push({
+								Name: res.data.playlist.tracks[i]["name"],
+								Author: "待修复",
+								Album: "待修复",
+								SQ:0,
+								DJ:1,
+								HQ:0,
+								VIP:1,
+								id:res.data.playlist.tracks[i]["id"]
+							});
+						}
+						this.newList = list;
+					}
+				});
+			}
 		},
 		methods:{
 			changeBar:function(e){
