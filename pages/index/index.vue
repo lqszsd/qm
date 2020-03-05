@@ -1,5 +1,5 @@
 <template>
-    <view class="index">
+	<view class="index">
 		<top></top>
 		<view class="banner">
 			<swiper class="bannerContent" :autoplay="swiper.autoplay">
@@ -16,16 +16,16 @@
 				</view>
 			</view>
 			<view class="used">
-				<view class="usedImg"  @tap="goUrl('../info/index')">
+				<view class="usedImg" @tap="goUrl('../info/index')">
 					<image :src="content.img"></image>
 					<image class="icon" v-if="imgSrc" :src="imgSrc+'icon/sanjiao.png'"></image>
 					<view class="imgTitle">{{content.imgTitle}}</view>
 				</view>
 				<view class="list">
-					<view class="grayColor info" v-for="(val,index) in content.list" :key="index"  @tap="goUrl('../new/index?count='+index)">
+					<view class="grayColor info" v-for="(val,index) in content.list" :key="index" @tap="goUrl('../new/index?count='+index)">
 						<view class="name">{{val.name}}</view>
 						<view class="disc">{{val.disc}}</view>
-						<image :src="val.src" class="listImg" ></image>
+						<image :src="val.src" class="listImg"></image>
 					</view>
 				</view>
 			</view>
@@ -37,162 +37,266 @@
 </template>
 
 <script>
-import top from '../../components/top'
-import albumblock from '../../components/albumblock'
-
-export default {
-	components:{
-		albumblock,top
-	},
-    data() {
-        return {
-			imgSrc:'../../static/image/',
-			swiper:{
-				autoplay:true,
-				img:[
-					'../../static/image/1.jpeg',
-					'../../static/image/2.jpeg',
-					'../../static/image/3.jpeg'
-				]
-			},
-			contentBar:[
-				{name:"歌手",src:'../../static/image/icon/ren_l.png'},
-				{name:"排行",src:'../../static/image/icon/paixingbang_l.png'},
-				{name:"分类歌单",src:'../../static/image/icon/fenlei1_l.png'},
-				{name:"电台",src:'../../static/image/icon/xinhaojieshouqi_l.png'},
-				{name:"视频",src:'../../static/image/icon/shipin-tianchong_l.png'}
+	import top from '../../components/top'
+	import albumblock from '../../components/albumblock'
+	var page = 0;
+	var list = [];
+	var r_data;
+	export default {
+		components: {
+			albumblock,
+			top
+		},
+		data() {
+			return {
+				imgSrc: '../../static/image/',
+				swiper: {
+					autoplay: true,
+					img: [
+						'../../static/image/1.jpeg',
+						'../../static/image/2.jpeg',
+						'../../static/image/3.jpeg'
+					]
+				},
+				contentBar: [{
+						name: "歌手",
+						src: '../../static/image/icon/ren_l.png'
+					},
+					{
+						name: "排行",
+						src: '../../static/image/icon/paixingbang_l.png'
+					},
+					{
+						name: "分类歌单",
+						src: '../../static/image/icon/fenlei1_l.png'
+					},
+					{
+						name: "电台",
+						src: '../../static/image/icon/xinhaojieshouqi_l.png'
+					},
+					{
+						name: "视频",
+						src: '../../static/image/icon/shipin-tianchong_l.png'
+					}
 				],
-			content:{
-				img:"../../static/image/sc1.jpg",
-				imgTitle:'个性电台',
-				list:[
-					{name:"新歌新碟",disc:"神秘嘉宾先生选择新歌",src:'../../static/image/sc2.jpeg'},
-					{name:"动画片专辑|热映",disc:"李建老狼联手现场",src:'../../static/image/sc3.jpeg'}
-				]
-			},
-			recommend:{
-				title:"为你推荐",
-				list:[
-					{name:"你的独家品味推荐",src:"../../static/image/sc5.jpg",count:"53133000",updateTime:"刚刚更新"},
-					{name:"慢跑随身听",src:"../../static/image/sc7.jpg",count:"210000",updateTime:"刚刚更新"},
-					{name:"失恋解药",src:"../../static/image/sc8.jpg",count:"4000",updateTime:"刚刚更新"},
-					{name:"薛之谦创作歌曲集",src:"../../static/image/sc9.jpg",count:"9200000",updateTime:"刚刚更新"},
-					{name:"青春是一场未知的探险",src:"../../static/image/sc10.jpg",count:"8909",updateTime:"刚刚更新"},
-					{name:"欧美|渐入佳境的入耳暖心旋律",src:"../../static/image/sc11.jpg",count:"120000",updateTime:"刚刚更新"}
-				]
-			},
-			newest:{
-				title:"最新专辑",
-				list:[
-					{name:"离开的接口",author:"刘瑞琪",src:"../../static/image/sc12.jpg"},
-					{name:"Cerll ls:The Albuild",author:"Made Will Made It",src:"../../static/image/sc13.jpg"},
-					{name:"SSS.GRIDMANIDSFEF",author:"OTX",src:"../../static/image/sc14.jpg"},
-					{name:"No place",author:"Backstreet",src:"../../static/image/sc15.jpg"},
-					{name:"别再闹了",author:"毛不易",src:"../../static/image/sc16.jpg"},
-					{name:"即刻电音",author:"即可电音",src:"../../static/image/sc17.jpg"}
-				]
-			},
-			sole:{
-				title:"独家内容",
-				list:[
-					{name:"乐见大牌|靖佩瑶清唱《清风是》又勾起广大会议",count:"531330000",src:"../../static/image/sc22.jpg"},
-					{name:"精心专用！法兰的歌声让你情绪在温暖的夜色和平",count:"53130000",src:"../../static/image/sc19.jpg"},
-					{name:"你妹听过的\"成功学\"说唱：人生赢家的秘诀在于洗澡",count:"31330000",src:"../../static/image/sc20.jpg"},
-					{name:"为N对情侣现场恋爱BGM.Kris Wu甘当电灯泡",count:"1338000",src:"../../static/image/sc21.jpg"},
-				]
-			},
-        }
-    },
-    onLoad(options) {
-    	uni.request({
-    	    url: 'http://lqwan.club:3000/top/list', //热歌榜
-    	    data: {
-    	        idx: '1'
-    	    },
-			method:"GET",
-    	    success: (res) => {
-    	        console.log(res.data.playlist.tracks);
-    	       let list=[];
-			   for(let i=0;i<res.data.playlist.tracks.length;i++){
-				   list.push({
-					  name: res.data.playlist.tracks[i]["name"],
-					  count:res.data.playlist.tracks[i]["al"]["id"],
-					  src:res.data.playlist.tracks[i]["al"]["picUrl"],
-				   });
-			   }
-			   this.recommend.list=list;
-    	    }
-    	});
-    },
-	methods: {
-		//换一批
-		recChange:function(val){
-			if(val=="recom"){
-				let arry = this.recommend.list.splice(0,2);
- 				this.recommend.list=[...this.recommend.list,...arry]
+				content: {
+					img: "../../static/image/sc1.jpg",
+					imgTitle: '个性电台',
+					list: [{
+							name: "新歌新碟",
+							disc: "神秘嘉宾先生选择新歌",
+							src: '../../static/image/sc2.jpeg'
+						},
+						{
+							name: "动画片专辑|热映",
+							disc: "李建老狼联手现场",
+							src: '../../static/image/sc3.jpeg'
+						}
+					]
+				},
+				recommend: {
+					title: "为你推荐",
+					list: [{
+							name: "你的独家品味推荐",
+							src: "../../static/image/sc5.jpg",
+							count: "53133000",
+							updateTime: "刚刚更新"
+						},
+						{
+							name: "慢跑随身听",
+							src: "../../static/image/sc7.jpg",
+							count: "210000",
+							updateTime: "刚刚更新"
+						},
+						{
+							name: "失恋解药",
+							src: "../../static/image/sc8.jpg",
+							count: "4000",
+							updateTime: "刚刚更新"
+						},
+						{
+							name: "薛之谦创作歌曲集",
+							src: "../../static/image/sc9.jpg",
+							count: "9200000",
+							updateTime: "刚刚更新"
+						},
+						{
+							name: "青春是一场未知的探险",
+							src: "../../static/image/sc10.jpg",
+							count: "8909",
+							updateTime: "刚刚更新"
+						},
+						{
+							name: "欧美|渐入佳境的入耳暖心旋律",
+							src: "../../static/image/sc11.jpg",
+							count: "120000",
+							updateTime: "刚刚更新"
+						}
+					]
+				},
+				newest: {
+					title: "最新专辑",
+					list: [{
+							name: "离开的接口",
+							author: "刘瑞琪",
+							src: "../../static/image/sc12.jpg"
+						},
+						{
+							name: "Cerll ls:The Albuild",
+							author: "Made Will Made It",
+							src: "../../static/image/sc13.jpg"
+						},
+						{
+							name: "SSS.GRIDMANIDSFEF",
+							author: "OTX",
+							src: "../../static/image/sc14.jpg"
+						},
+						{
+							name: "No place",
+							author: "Backstreet",
+							src: "../../static/image/sc15.jpg"
+						},
+						{
+							name: "别再闹了",
+							author: "毛不易",
+							src: "../../static/image/sc16.jpg"
+						},
+						{
+							name: "即刻电音",
+							author: "即可电音",
+							src: "../../static/image/sc17.jpg"
+						}
+					]
+				},
+				sole: {
+					title: "独家内容",
+					list: [{
+							name: "乐见大牌|靖佩瑶清唱《清风是》又勾起广大会议",
+							count: "531330000",
+							src: "../../static/image/sc22.jpg"
+						},
+						{
+							name: "精心专用！法兰的歌声让你情绪在温暖的夜色和平",
+							count: "53130000",
+							src: "../../static/image/sc19.jpg"
+						},
+						{
+							name: "你妹听过的\"成功学\"说唱：人生赢家的秘诀在于洗澡",
+							count: "31330000",
+							src: "../../static/image/sc20.jpg"
+						},
+						{
+							name: "为N对情侣现场恋爱BGM.Kris Wu甘当电灯泡",
+							count: "1338000",
+							src: "../../static/image/sc21.jpg"
+						},
+					]
+				},
 			}
 		},
-		goUrl : function (str){
-			uni.navigateTo({
-				url: str
+		onLoad(options) {
+			uni.request({
+				url: 'http://lqwan.club:3000/top/list', //热歌榜
+				data: {
+					idx: '1'
+				},
+				method: "GET",
+				success: (res) => {
+					r_data=res.data.playlist.tracks;
+					console.log(res.data.playlist.tracks);
+					for (let i = page; i < page + 6; i++) {
+						list.push({
+							name: res.data.playlist.tracks[i]["name"],
+							count: res.data.playlist.tracks[i]["al"]["id"],
+							src: res.data.playlist.tracks[i]["al"]["picUrl"],
+						});
+					}
+					page = page + 6
+					this.recommend.list = list;
+				}
 			});
 		},
-    }
-}
+		methods: {
+			//换一批
+			recChange: function(val) {
+				if (val == "recom") {
+					this.recommend.list=[];
+					list=[];
+					for (let i = page; i < page + 6; i++) {
+						list.push({
+							name: r_data[i]["name"],
+							count: r_data[i]["al"]["id"],
+							src: r_data[i]["al"]["picUrl"],
+						});
+					}
+					this.recommend.list = list;
+					page = page + 6
+				}
+			},
+			goUrl: function(str) {
+				uni.navigateTo({
+					url: str
+				});
+			},
+		}
+	}
 </script>
 <style lang="scss">
 	.index {
 		width: 100vw;
 		padding-bottom: 60upx;
-		color:#333333;
-		
-		.bannerContent{
+		color: #333333;
+
+		.bannerContent {
 			width: 100%;
 			height: 320upx;
-			.swiperImg{
+
+			.swiperImg {
 				width: 100%;
 				height: 100%;
 			}
 		}
-		
-		.content{
+
+		.content {
 			padding: 20upx;
-			
-			.bar{
+
+			.bar {
 				display: flex;
 				padding: 36upx 0;
 				margin-top: -28upx;
 				position: relative;
 				z-index: 1;
 				background: #FFFFFF;
-				box-shadow:4upx 4upx 10upx #CCCCCC;
-				
-				.iconSpan{
+				box-shadow: 4upx 4upx 10upx #CCCCCC;
+
+				.iconSpan {
 					flex: 1;
 					text-align: center;
-					.iconBarImg{
+
+					.iconBarImg {
 						width: 44upx;
 						height: 44upx;
 					}
 				}
 			}
-			
-			.used{
+
+			.used {
 				display: flex;
 				margin-top: 40upx;
-				
-				.usedImg{
+
+				.usedImg {
 					position: relative;
 					width: 220upx;
 					height: 220upx;
 					margin-right: 20upx;
 					box-shadow: 4upx 4upx 10upx #CCCCCC;
-					image{
+
+					image {
 						height: 100%;
 						width: 100%;
 					}
-					
-					.icon{
+
+					.icon {
 						position: absolute;
 						width: 50upx;
 						height: 50upx;
@@ -201,8 +305,8 @@ export default {
 						margin: -25upx auto auto -25upx;
 						opacity: .8;
 					}
-					
-					.imgTitle{
+
+					.imgTitle {
 						position: absolute;
 						display: block;
 						width: 100%;
@@ -211,30 +315,30 @@ export default {
 						color: #FFFFFF;
 					}
 				}
-				
-				.list{
+
+				.list {
 					flex: 1;
-					
-					.info{
+
+					.info {
 						position: relative;
 						height: 100upx;
 						box-sizing: border-box;
 						padding: 12upx 20upx;
-						
-						&:first-child{
+
+						&:first-child {
 							margin-bottom: 20upx;
 						}
-						
-						.name{
+
+						.name {
 							font-size: 32upx;
 						}
-						
-						.disc{
+
+						.disc {
 							font-size: 26upx;
 							color: #6f6f6f;
 						}
-						
-						.listImg{
+
+						.listImg {
 							position: absolute;
 							right: 0;
 							top: 0;
@@ -245,6 +349,6 @@ export default {
 				}
 			}
 		}
-		
+
 	}
 </style>

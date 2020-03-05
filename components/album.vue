@@ -8,7 +8,8 @@
  -->
 <template>
 	<view  v-if="prodata" class="recom">
-		<view v-for="(val,index) in prodata" :key="index" class="zj" :style="{width:blockWidth}" @tap="goUrl('../info/index')">
+		<view v-for="(val,index) in prodata" :key="index" class="zj" :style="{width:blockWidth}" @tap="goUrl('../info/index?id='+val.count+'&img_src='+val.src+
+		'&name='+val.name)">
 			<view class="imgSpan">
 				<image class="img" v-if="val.src" :src="val.src" mode='widthFix'></image>
 				<image class="icon" v-if="imgSrc" :src="imgSrc+'icon/kaishi-2.png'"  mode='widthFix'></image>
