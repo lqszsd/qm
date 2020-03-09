@@ -2,7 +2,7 @@
 	<view class="info" :style="bgStyle">
 		<!-- '' -->
 		<view class="bg"></view>
-		<view class="content">
+		<view class="content" v-if="canShow">
 			<view class="top">
 				<view class="name">{{audioList[audioPlaySrc].name}}</view>
 				<view class="author">{{audioList[audioPlaySrc].author}}</view>
@@ -97,7 +97,7 @@
 					}
 					this.audioList = [];
 					audio.push({
-						name: option.name,
+						name: (option && option.name) || "",
 						author: "待修复",
 						img: option.img_src,
 						src: res.data.data[0].url
@@ -112,6 +112,12 @@
 			console.log(option)
 		},
 		computed: {
+			canShow: function() {
+				if (this.audioList.length > this.audioPlaySrc) {
+					return true;
+				}
+				return false;
+			},
 			width: function() {
 				return 'width:' + this.nowmiao / this.allmiao * this.lineBarWid + 'upx'
 			},
@@ -139,6 +145,7 @@
 		methods: {
 			audioInit() {
 				let src = this.audioList[this.audioPlaySrc].src
+				console.log("audioInit:",this.audioList[this.audioPlaySrc]);
 				// if(innerAudioContext){
 				// 	innerAudioContext.destroy()
 				// 	innerAudioContext = ''
